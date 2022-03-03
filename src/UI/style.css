@@ -1,0 +1,50 @@
+h1 {
+  /* text-align: center; */
+}
+.form-class {
+  width: 200px;
+  /* padding: 20px; */
+}
+
+input[type="text"],
+.data-list-style {
+  padding: 10px;
+  width: 250px;
+  margin-bottom: 10px;
+  /* box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06); */
+}
+
+#submit-button {
+  padding: 10px;
+  width: 250px;
+  margin-bottom: 10px;
+  color: white;
+  background-color: black;
+}
+
+#edit-button {
+  padding: 10px;
+  width: 100px;
+  margin-left: 5px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  border-style: solid;
+}
+
+#delete-button {
+  padding: 10px;
+  width: 100px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  border: none;
+  color: white;
+  background-color: red;
+}
+
+.entry-border {
+  width: 500px;
+  border-style: solid;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
