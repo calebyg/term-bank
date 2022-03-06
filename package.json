@@ -1,5 +1,5 @@
 {
-  "name": "term-bank-frontend",
+  "name": "term-bank",
   "homepage": "https://computeh.github.io/term-bank",
   "version": "0.1.0",
   "private": true,
@@ -17,8 +17,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy":"npm run build",
-    "deploy":"gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "reinstall": "^2.0.0"
   }
 }
