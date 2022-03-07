@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import "../UI/style.css";
 
 const EntryForm = (props) => {
@@ -15,6 +16,18 @@ const EntryForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+
+    // Endpoint expects a JSON object in the request body
+    axios
+      .post("http://localhost:5000/entries/add", {
+        term: term,
+        definition: definition,
+        category: category,
+      })
+      .then((res) => console.log(res.data))
+      .catch((error) => {
+        console.log(error.message);
+      });
 
     props.addEntry(term, definition, category);
 
@@ -71,7 +84,9 @@ const EntryForm = (props) => {
           })}
         </datalist>
       </div>
-      <button type="submit" id="submit-button">Submit</button>
+      <button type="submit" id="submit-button">
+        Submit
+      </button>
     </form>
   );
 };

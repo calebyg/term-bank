@@ -3,6 +3,7 @@ import Entry from "./components/Entry";
 import EntryForm from "./components/EntryForm";
 import { nanoid } from "nanoid";
 import FilterForm from "./components/FilterForm";
+import axios from "axios";
 
 const App = (props) => {
   const [entries, setEntries] = useState(props.entries);
@@ -21,7 +22,6 @@ const App = (props) => {
       term: term,
       definition: definition,
       category: category,
-      date_added: new Date().toString(),
     };
     setEntries([...entries, new_entry]);
   };
@@ -33,26 +33,37 @@ const App = (props) => {
     setEntries(updated_list);
   };
 
+  // const getEntries = () => {
+  //   axios
+  //     .get("/entries")
+  //     .then((response) => {
+  //       const data = response.data;
+  //       this.setEntries(data);
+  //       console.log("Initial data has been received!");
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
   switch (contentFilter) {
     case "A-Z":
       {
         list_of_entries.sort((a, b) => a.term.localeCompare(b.term));
       }
       break;
-    case "Date added (oldest)":
-      {
-        list_of_entries.sort(
-          (a, b) => new Date(a.date_added) - new Date(b.date_added)
-        );
-      }
-      break;
-    case "Date added (newest)":
-      {
-        list_of_entries.sort(
-          (a, b) => new Date(b.date_added) - new Date(a.date_added)
-        );
-      }
-      break;
+    // case "Date added (oldest)":
+    //   {
+    //     list_of_entries.sort(
+    //       (a, b) => new Date(a.date_added) - new Date(b.date_added)
+    //     );
+    //   }
+    //   break;
+    // case "Date added (newest)":
+    //   {
+    //     list_of_entries.sort(
+    //       (a, b) => new Date(b.date_added) - new Date(a.date_added)
+    //     );
+    //   }
+    //   break;
   }
 
   let filtered_list_of_entries = list_of_entries.map((entry) => {
@@ -63,7 +74,6 @@ const App = (props) => {
         category={entry.category}
         id={entry.id}
         key={entry.id}
-        date_added={entry.date_added}
         deleteTask={deleteTask}
       />
     );
