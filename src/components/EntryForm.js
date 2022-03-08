@@ -29,8 +29,6 @@ const EntryForm = (props) => {
         console.log(error.message);
       });
 
-    props.addEntry(term, definition, category);
-
     setTerm("");
     setDefinition("");
     setCategory("");

@@ -1,91 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Entry from "./components/Entry";
 import EntryForm from "./components/EntryForm";
-import { nanoid } from "nanoid";
 import FilterForm from "./components/FilterForm";
+
 import axios from "axios";
 
 const App = (props) => {
-  const [entries, setEntries] = useState(props.entries);
+  const [entries, setEntries] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [contentFilter, setContentFilter] = useState("A-Z");
 
-  let list_of_entries = entries.filter((entry) => {
-    return categoryFilter === "All" || categoryFilter === ""
-      ? true
-      : entry.category === categoryFilter;
-  });
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/entries")
+      .then((response) => {
+        if (response.data.length > 0) {
+          setEntries(response.data);
+          console.log("Pulling data from MongoDB...");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  const addEntry = (term, definition, category) => {
-    const new_entry = {
-      id: "id-" + nanoid(),
-      term: term,
-      definition: definition,
-      category: category,
-    };
-    setEntries([...entries, new_entry]);
-  };
-
-  const deleteTask = (id) => {
-    let updated_list = entries.filter((entry) => {
-      return entry.id != id;
-    });
-    setEntries(updated_list);
-  };
-
-  // const getEntries = () => {
-  //   axios
-  //     .get("/entries")
-  //     .then((response) => {
-  //       const data = response.data;
-  //       this.setEntries(data);
-  //       console.log("Initial data has been received!");
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
-  switch (contentFilter) {
-    case "A-Z":
-      {
-        list_of_entries.sort((a, b) => a.term.localeCompare(b.term));
-      }
-      break;
-    // case "Date added (oldest)":
-    //   {
-    //     list_of_entries.sort(
-    //       (a, b) => new Date(a.date_added) - new Date(b.date_added)
-    //     );
-    //   }
-    //   break;
-    // case "Date added (newest)":
-    //   {
-    //     list_of_entries.sort(
-    //       (a, b) => new Date(b.date_added) - new Date(a.date_added)
-    //     );
-    //   }
-    //   break;
-  }
-
-  let filtered_list_of_entries = list_of_entries.map((entry) => {
+  let modifiedEntries = entries.map((entry) => {
     return (
       <Entry
         term={entry.term}
         definition={entry.definition}
         category={entry.category}
-        id={entry.id}
-        key={entry.id}
-        deleteTask={deleteTask}
+        id={entry._id}
+        key={entry._id}
+        createdAt={entry.createdAt}
       />
     );
   });
 
-  let plural = list_of_entries.length === 1 ? "entry" : "entries";
-  let headerText = "List of " + list_of_entries.length + " " + plural + ":";
+
+  let plural = entries.length === 1 ? "entry" : "entries";
+  let headerText = "List of " + entries.length + " " + plural + ":";
 
   return (
     <div>
       <h1>Term Bank</h1>
-      <EntryForm addEntry={addEntry} entries={entries} />
+      <EntryForm entries={entries} />
       <FilterForm
         setCategoryFilter={setCategoryFilter}
         setContentFilter={setContentFilter}
@@ -93,7 +52,8 @@ const App = (props) => {
       />
       <div>
         <h2>{headerText}</h2>
-        {filtered_list_of_entries}
+        {modifiedEntries}
+        {console.log(entries)}
       </div>
     </div>
   );
