@@ -56,17 +56,27 @@ const App = (props) => {
 
   return (
     <div>
-      <h1>Term Bank</h1>
-      <EntryForm entries={entries} />
-      <div>
-        <FilterForm setCategoryFilter={setCategoryFilter} entries={entries} />
-        {/* {categoryFilter} */}
+      <div className="float-container">
+        <div className="float-child">
+          <p>
+            Hello, all this is Caleb, the creator of Term Bank. Feel free to add
+            a new word you learned, along with its definition and category. You
+            may sort the existing list of entries by category type. Give it a
+            try!
+          </p>
+          <h1 className="main-header">Term Bank</h1>
+          <EntryForm entries={entries} />
+          <div>
+            <FilterForm
+              setCategoryFilter={setCategoryFilter}
+              entries={entries}
+            />
+          </div>
+        </div>
+        <div></div>
       </div>
 
-      <div>
-        <h2>{headerText}</h2>
-        {filtered_entries}
-      </div>
+      <div>{filtered_entries}</div>
     </div>
   );
 };

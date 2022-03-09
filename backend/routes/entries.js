@@ -50,19 +50,6 @@ router.route("/update/:id").post((req, res) => {
   if (!req.params.id) {
     return res.status(400).json({ status: 400, message: "Id must be present" });
   }
-  // Entry.findByIdAndUpdate(req.params.id).then((entry) => {
-  //   // entry._id = req.body._id;
-  //   entry.term = req.body.term;
-  //   entry.definition = req.body.definition;
-  //   entry.category = req.body.category;
-  //   // entry.createdAt = req.body.createdAt;
-  //   entry.updatedAt = req.body.updatedAt;
-
-  //   entry
-  //     .save()
-  //     .then(() => res.json("Entry updated!"))
-  //     .catch((err) => res.status(400).json("Error: " + err));
-  // });
 });
 
 module.exports = router;

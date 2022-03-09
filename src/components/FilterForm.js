@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../UI/style.css";
+import "../UI/style.scss";
 
 const FilterForm = (props) => {
   let default_list = ["All"];
