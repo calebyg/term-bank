@@ -1,6 +1,6 @@
+import "../UI/style.css";
 import { useState } from "react";
 import axios from "axios";
-import "../UI/style.css";
 
 const EntryForm = (props) => {
   // Create state handlers for input

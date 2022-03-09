@@ -7,29 +7,37 @@ const Entry = (props) => {
   const term = props.term;
   const definition = props.definition;
   const category = props.category;
-  const createdAt = props.createdAt;
+  const updatedAt = props.updatedAt;
 
-  const [isEditing, setEditing] = useState(false);
-  const [newTerm, setNewTerm] = useState("");
-  const [newDefinition, setNewDefinition] = useState("");
-  const [newCategory, setNewCategory] = useState("");
+  // const [isEditing, setEditing] = useState(false);
+  // const [newTerm, setNewTerm] = useState("");
+  // const [newDefinition, setNewDefinition] = useState("");
+  // const [newCategory, setNewCategory] = useState("");
 
-  const editFieldRef = useRef(null);
-  const editButtonRef = useRef(null);
+  // const editFieldRef = useRef(null);
+  // const editButtonRef = useRef(null);
 
-  const usePrevious = (value) => {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  };
+  // const usePrevious = (value) => {
+  //   const ref = useRef();
+  //   useEffect(() => {
+  //     ref.current = value;
+  //   });
+  //   return ref.current;
+  // };
 
-  const wasEditing = usePrevious(isEditing);
+  // const wasEditing = usePrevious(isEditing);
 
-  const handleChange = (event) => {
-    setNewTerm(event.target.value);
-  };
+  // const editHandler = (event) => {
+  //   event.preventDefault();
+
+  //   axios
+  //     .post(`http://localhost:5000/entries/update/${id}`)
+  //     .then((response) => {
+  //       console.log(response);
+  //       console.log("Entry update successful!");
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
   const deleteTaskHandler = (event) => {
     event.preventDefault();
 
@@ -42,59 +50,59 @@ const Entry = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const editingTemplate = (
-    <form className="">
-      <div className="">
-        <label className="" htmlFor={id}>
-          Edit term:
-        </label>
-        <input
-          id={id}
-          className=""
-          type="text"
-          value={newTerm || term}
-          onChange={handleChange}
-          ref={editFieldRef}
-        />
-        <div className="">
-          <label className="" htmlFor={id}>
-            Edit definition:
-          </label>
-          <input
-            id={id}
-            className=""
-            type="text"
-            value={newDefinition || definition}
-            onChange={handleChange}
-            ref={editFieldRef}
-          />
-        </div>
-        <div className="">
-          <label className="" htmlFor={id}>
-            Edit category:
-          </label>
-          <input
-            id={id}
-            className=""
-            type="text"
-            value={newCategory || category}
-            onChange={handleChange}
-            ref={editFieldRef}
-          />
-        </div>
-      </div>
-      <div className="">
-        <button type="button" className="" onClick={() => setEditing(false)}>
-          Cancel
-          <span className="">renaming {term}</span>
-        </button>
-        <button type="submit" className="">
-          Save
-          <span className="">new name for {term}</span>
-        </button>
-      </div>
-    </form>
-  );
+  // const editingTemplate = (
+  //   <form className="" onSubmit={editHandler}>
+  //     <div className="">
+  //       <label className="" htmlFor={id}>
+  //         Edit term:
+  //       </label>
+  //       <input
+  //         id={id}
+  //         className=""
+  //         type="text"
+  //         value={newTerm || term}
+  //         onChange={(event) => setNewTerm(event.target.value)}
+  //         ref={editFieldRef}
+  //       />
+  //       <div className="">
+  //         <label className="" htmlFor={id}>
+  //           Edit definition:
+  //         </label>
+  //         <input
+  //           id={id}
+  //           className=""
+  //           type="text"
+  //           value={newDefinition || definition}
+  //           onChange={(event) => setNewDefinition(event.target.value)}
+  //           ref={editFieldRef}
+  //         />
+  //       </div>
+  //       <div className="">
+  //         <label className="" htmlFor={id}>
+  //           Edit category:
+  //         </label>
+  //         <input
+  //           id={id}
+  //           className=""
+  //           type="text"
+  //           value={newCategory || category}
+  //           onChange={(event) => setNewDefinition(event.target.value)}
+  //           ref={editFieldRef}
+  //         />
+  //       </div>
+  //     </div>
+  //     <div className="">
+  //       <button type="button" className="" onClick={() => setEditing(false)}>
+  //         Cancel
+  //         <span className="">renaming {term}</span>
+  //       </button>
+  //       <button type="submit" className="">
+  //         Save
+  //         <span className="">new name for {term}</span>
+  //       </button>
+  //     </div>
+  //   </form>
+  // );
 
   const viewTemplate = (
     <div className="entry-border">
@@ -114,26 +122,30 @@ const Entry = (props) => {
       </div>
 
       <div>
-        <strong>Date created: </strong>
-        {createdAt}
+        <strong>Last updated: </strong> {updatedAt}
       </div>
 
       <div>
-        <button
+        {/* <button
           type="button"
           id="edit-button"
           onClick={() => setEditing(true)}
           ref={editButtonRef}
         >
           Edit
-        </button>
-        <button type="button" id="delete-button" onClick={deleteTaskHandler}>
+        </button> */}
+        <button
+          className="entry-button"
+          type="button"
+          id="delete-button"
+          onClick={deleteTaskHandler}
+        >
           Delete
         </button>
       </div>
     </div>
   );
-  return isEditing ? editingTemplate : viewTemplate;
+  return viewTemplate;
 };
 
 export default Entry;

@@ -25,6 +25,12 @@ const entrySchema = new Schema(
       trim: false,
       minlength: 1,
     },
+    createdAt: {
+      type: String,
+    },
+    updatedAt: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

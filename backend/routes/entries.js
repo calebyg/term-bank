@@ -29,29 +29,40 @@ router.route("/add").post((req, res) => {
 
   newEntry
     .save()
-    .then(() => res.json("Entry added"))
+    .then(() => res.json("Entry added successfully."))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
 // API DELETE by ID endpoint
 router.route("/delete/:id").delete((req, res) => {
+  if (!req.params.id) {
+    return res
+      .status(400)
+      .json({ status: 400, message: "Id must be present." });
+  }
   Entry.findByIdAndDelete(req.params.id)
-    .then(() => res.json("Entry deleted."))
+    .then(() => res.json("Entry deleted successfully."))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
 // API UPDATE by ID endpoint
 router.route("/update/:id").post((req, res) => {
-  Entry.findById(req.params.id).then((entry) => {
-    entry.term = req.body.term;
-    entry.definition = req.body.definition;
-    entry.category = req.body.category;
+  if (!req.params.id) {
+    return res.status(400).json({ status: 400, message: "Id must be present" });
+  }
+  // Entry.findByIdAndUpdate(req.params.id).then((entry) => {
+  //   // entry._id = req.body._id;
+  //   entry.term = req.body.term;
+  //   entry.definition = req.body.definition;
+  //   entry.category = req.body.category;
+  //   // entry.createdAt = req.body.createdAt;
+  //   entry.updatedAt = req.body.updatedAt;
 
-    entry
-      .save()
-      .then(() => res.json("Entry updated!"))
-      .catch((err) => res.status(400).json("Error: " + err));
-  });
+  //   entry
+  //     .save()
+  //     .then(() => res.json("Entry updated!"))
+  //     .catch((err) => res.status(400).json("Error: " + err));
+  // });
 });
 
 module.exports = router;

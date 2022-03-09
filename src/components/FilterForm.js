@@ -8,38 +8,18 @@ const FilterForm = (props) => {
   list_of_categories = [default_list, ...list_of_categories];
   let unique_categories = [...new Set(list_of_categories)];
 
-  const selectedCategoryHandler = (event) => {
-    event.preventDefault();
-    props.setCategoryFilter(event.target.value);
-  };
-
   return (
     <div>
-      <div>
-        <input
-          list="filter-choices"
-          placeholder="Filter by..."
-          onSelect={(e) => props.setContentFilter(e.target.value)}
-        />
-        <datalist id="filter-choices">
-          <option value="A-Z" />
-          <option value="Date added (newest)" />
-          <option value="Date added (oldest)" />
-        </datalist>
-      </div>
-      <div>
-        <input
-          list="filtered-categories"
-          placeholder="Choose category..."
-          className="data-list-border"
-          onSelect={selectedCategoryHandler}
-        />
-        <datalist id="filtered-categories">
-          {unique_categories.map((category) => {
-            return <option key={category} value={category} />;
-          })}
-        </datalist>
-      </div>
+      <label>Sort by category: </label>
+      <select onChange={(event) => props.setCategoryFilter(event.target.value)}>
+        {unique_categories.map((category, index) => {
+          return (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          );
+        })}
+      </select>
     </div>
   );
 };

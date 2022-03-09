@@ -8,7 +8,6 @@ import axios from "axios";
 const App = (props) => {
   const [entries, setEntries] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("All");
-  const [contentFilter, setContentFilter] = useState("A-Z");
 
   useEffect(() => {
     axios
@@ -16,7 +15,6 @@ const App = (props) => {
       .then((response) => {
         if (response.data.length > 0) {
           setEntries(response.data);
-          console.log("Pulling data from MongoDB...");
         }
       })
       .catch((err) => {
@@ -24,36 +22,50 @@ const App = (props) => {
       });
   }, []);
 
-  let modifiedEntries = entries.map((entry) => {
-    return (
-      <Entry
-        term={entry.term}
-        definition={entry.definition}
-        category={entry.category}
-        id={entry._id}
-        key={entry._id}
-        createdAt={entry.createdAt}
-      />
-    );
-  });
+  const addEntry = (_id, _term, _definition, _category) => {
+    const newEntry = {
+      id: _id,
+      term: _term,
+      definition: _definition,
+      category: _category,
+    };
 
+    setEntries([newEntry, ...entries]);
+  };
 
-  let plural = entries.length === 1 ? "entry" : "entries";
-  let headerText = "List of " + entries.length + " " + plural + ":";
+  let filtered_entries = entries
+    .filter(
+      (entry) => categoryFilter === entry.category || categoryFilter === "All"
+    )
+    .map((entry) => {
+      return (
+        <Entry
+          term={entry.term}
+          definition={entry.definition}
+          category={entry.category}
+          id={entry._id}
+          key={entry._id}
+          createdAt={entry.createdAt}
+          updatedAt={entry.updatedAt}
+        />
+      );
+    });
+
+  let plural = filtered_entries.length === 1 ? "entry" : "entries";
+  let headerText = "List of " + filtered_entries.length + " " + plural + ":";
 
   return (
     <div>
       <h1>Term Bank</h1>
       <EntryForm entries={entries} />
-      <FilterForm
-        setCategoryFilter={setCategoryFilter}
-        setContentFilter={setContentFilter}
-        entries={entries}
-      />
+      <div>
+        <FilterForm setCategoryFilter={setCategoryFilter} entries={entries} />
+        {/* {categoryFilter} */}
+      </div>
+
       <div>
         <h2>{headerText}</h2>
-        {modifiedEntries}
-        {console.log(entries)}
+        {filtered_entries}
       </div>
     </div>
   );
