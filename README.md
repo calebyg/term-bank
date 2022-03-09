@@ -1,6 +1,7 @@
 # Term Bank
 
 ![mern-stack](https://user-images.githubusercontent.com/32976268/157532796-10f456b5-3dfd-4094-b5b5-029115d4a817.png)
+
 (https://www.mindinventory.com/blog/wp-content/uploads/2021/06/mern-stack.png)
 
 
