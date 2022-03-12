@@ -8,10 +8,7 @@ const EntryForm = (props) => {
   const [definition, setDefinition] = useState("");
   const [category, setCategory] = useState("");
 
-  let default_list = ["Create new category"];
   let list_of_categories = props.entries.map((entry) => entry.category);
-
-  list_of_categories = [default_list, ...list_of_categories];
   let unique_categories = [...new Set(list_of_categories)];
 
   const submitHandler = (event) => {
@@ -43,7 +40,7 @@ const EntryForm = (props) => {
   };
 
   return (
-    <form onSubmit={submitHandler} className="form-class">
+    <form onSubmit={submitHandler} className="form-class" autoComplete="off">
       <div>
         <input
           type="text"

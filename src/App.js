@@ -13,25 +13,12 @@ const App = (props) => {
     axios
       .get("http://localhost:5000/entries")
       .then((response) => {
-        if (response.data.length > 0) {
-          setEntries(response.data);
-        }
+        setEntries(response.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
-  const addEntry = (_id, _term, _definition, _category) => {
-    const newEntry = {
-      id: _id,
-      term: _term,
-      definition: _definition,
-      category: _category,
-    };
-
-    setEntries([newEntry, ...entries]);
-  };
+  }, [entries]);
 
   let filtered_entries = entries
     .filter(
