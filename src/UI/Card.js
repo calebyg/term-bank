@@ -13,6 +13,9 @@ const Card = (props) => {
       >
         Delete
       </button>
+      <button type="button" onClick={props.editButtonHandler}>
+        Edit
+      </button>
     </div>
   );
 };

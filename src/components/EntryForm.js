@@ -31,14 +31,6 @@ const EntryForm = (props) => {
     setCategory("");
   };
 
-  const termChangeHandler = (event) => {
-    setTerm(event.target.value);
-  };
-
-  const definitionChangeHandler = (event) => {
-    setDefinition(event.target.value);
-  };
-
   return (
     <form onSubmit={submitHandler} className="form-class" autoComplete="off">
       <div>
@@ -48,7 +40,9 @@ const EntryForm = (props) => {
           placeholder="Enter term here..."
           id="term-textfield"
           value={term}
-          onChange={termChangeHandler}
+          onChange={(e) => {
+            setTerm(e.target.value);
+          }}
         />
       </div>
 
@@ -59,7 +53,9 @@ const EntryForm = (props) => {
           placeholder="Enter definition here..."
           id="definition-textfield"
           value={definition}
-          onChange={definitionChangeHandler}
+          onChange={(e) => {
+            setDefinition(e.target.value);
+          }}
         />
       </div>
 

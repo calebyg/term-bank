@@ -46,8 +46,8 @@ const App = (props) => {
       <div className="float-container">
         <div className="float-child">
           <p>
-            Hello, all this is Caleb, the creator of Term Bank. Feel free to add
-            a new word you learned, along with its definition and category. You
+            Hi this is Caleb, the creator of Term Bank! Please start by adding a
+            new word you learned, along with its definition and category. You
             may sort the existing list of entries by category type. Give it a
             try!
           </p>
@@ -59,10 +59,10 @@ const App = (props) => {
               entries={entries}
             />
           </div>
+          {headerText}
         </div>
         <div></div>
       </div>
-
       <div>{filtered_entries}</div>
     </div>
   );

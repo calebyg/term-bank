@@ -46,10 +46,32 @@ router.route("/delete/:id").delete((req, res) => {
 });
 
 // API UPDATE by ID endpoint
-router.route("/update/:id").post((req, res) => {
+router.route("/update/:id").put((req, res) => {
   if (!req.params.id) {
-    return res.status(400).json({ status: 400, message: "Id must be present" });
+    return res
+      .status(400)
+      .json({ status: 400, message: "Id must be present." });
   }
+
+  // findByIdAndUpdate
+  Entry.findByIdAndUpdate(req.params.id, {
+    term: req.body.term || "Untilted term",
+    definition: req.body.definition || "Untitled definition",
+    category: req.body.category || "Untitled category",
+  })
+    .then((entry) => {
+      if (!entry) {
+        return res.status(404).send({
+          message: "Entry not found with id: " + req.params.id,
+        });
+      }
+      res.send(entry);
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: "Error updating entry with id: " + req.params.id,
+      });
+    });
 });
 
 module.exports = router;

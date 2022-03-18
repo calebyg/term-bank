@@ -5,10 +5,14 @@ import Card from "../UI/Card";
 
 const Entry = (props) => {
   const id = props.id;
-  const term = props.term;
-  const definition = props.definition;
-  const category = props.category;
-  const updatedAt = props.updatedAt;
+
+  // state hooks for form submission
+  const [term, setTerm] = useState(props.term);
+  const [definition, setDefinition] = useState(props.definition);
+  const [category, setCategory] = useState(props.category);
+
+  // state for editing/viewing templates
+  const [editing, setEditing] = useState(false);
 
   const deleteTaskHandler = (event) => {
     event.preventDefault();
@@ -22,6 +26,78 @@ const Entry = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const editButtonHandler = (event) => {
+    event.preventDefault();
+    setEditing(true);
+  }
+
+  const editEntryHandler = (event) => {
+    event.preventDefault();
+
+    axios
+      .put(`http://localhost:5000/entries/update/${id}`, {
+        term: term,
+        definition: definition,
+        category: category,
+      })
+      .then((response) => {
+        console.log(response);
+        console.log("Entry edited successfully");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const editTemplate = (
+    <form onSubmit={editEntryHandler} autoComplete="off">
+      <div>
+        <input
+          type="text"
+          name="new-term"
+          placeholder={term}
+          id="new-term-field"
+          value={term}
+          onChange={(e) => {
+            setTerm(e.target.value);
+          }}
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          name="new-definition"
+          placeholder={definition}
+          id="new-definition-field"
+          value={definition}
+          onChange={(e) => {
+            setDefinition(e.target.value);
+          }}
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          name="new-category"
+          placeholder={category}
+          id="new-category-field"
+          value={category}
+          onChange={(e) => {
+            setCategory(e.target.value);
+          }}
+        />
+      </div>
+      <button
+        type="submit"
+        id="confirm-edit-btn"
+        onClick={() => setEditing(false)}
+      >
+        Submit
+      </button>
+      <button type="button" onClick={() => setEditing(false)}>
+        Cancel
+      </button>
+    </form>
+  );
+
   const viewTemplate = (
     <div className="wrapper">
       <Card
@@ -29,10 +105,11 @@ const Entry = (props) => {
         term={term}
         definition={definition}
         deleteTaskHandler={deleteTaskHandler}
+        editButtonHandler={editButtonHandler}
       />
     </div>
   );
-  return viewTemplate;
+  return editing ? editTemplate : viewTemplate;
 };
 
 export default Entry;
